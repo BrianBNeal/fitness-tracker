@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using FitnessTracker.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using FitnessTracker.Models;
 
 namespace FitnessTracker
 {
@@ -38,7 +39,7 @@ namespace FitnessTracker
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<ApplicationUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
