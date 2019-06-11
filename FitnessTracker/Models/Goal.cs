@@ -8,10 +8,14 @@ namespace FitnessTracker.Models
 {
     public class Goal
     {
+        [Key]
         public int GoalId { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+
+        [Required]
+        public ApplicationUser User { get; set; }
         
         [Required]
         public DateTime StartDate { get; set; }
@@ -22,6 +26,5 @@ namespace FitnessTracker.Models
         [Required]
         public int Target { get; set; } //user's target for amount of time spent on goal
 
-        public ApplicationUser User { get; set; }
     }
 }

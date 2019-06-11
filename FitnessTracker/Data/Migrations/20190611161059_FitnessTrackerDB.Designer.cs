@@ -4,14 +4,16 @@ using FitnessTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FitnessTracker.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190611161059_FitnessTrackerDB")]
+    partial class FitnessTrackerDB
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,8 +39,9 @@ namespace FitnessTracker.Data.Migrations
 
                     b.Property<int>("LocationId");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserId1");
 
                     b.HasKey("ExerciseId");
 
@@ -46,7 +49,7 @@ namespace FitnessTracker.Data.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Exercises");
                 });
@@ -60,12 +63,13 @@ namespace FitnessTracker.Data.Migrations
                     b.Property<string>("Type")
                         .IsRequired();
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserId1");
 
                     b.HasKey("ExerciseTypeId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("ExerciseTypes");
                 });
@@ -82,12 +86,13 @@ namespace FitnessTracker.Data.Migrations
 
                     b.Property<int>("Target");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserId1");
 
                     b.HasKey("GoalId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Goals");
                 });
@@ -101,12 +106,13 @@ namespace FitnessTracker.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<int>("UserId");
+
+                    b.Property<string>("UserId1");
 
                     b.HasKey("LocationId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId1");
 
                     b.ToTable("Locations");
                 });
@@ -322,32 +328,28 @@ namespace FitnessTracker.Data.Migrations
 
                     b.HasOne("FitnessTracker.Models.ApplicationUser", "User")
                         .WithMany("Exercises")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("FitnessTracker.Models.ExerciseType", b =>
                 {
                     b.HasOne("FitnessTracker.Models.ApplicationUser", "User")
                         .WithMany("ExerciseTypes")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("FitnessTracker.Models.Goal", b =>
                 {
                     b.HasOne("FitnessTracker.Models.ApplicationUser", "User")
                         .WithMany("Goals")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("FitnessTracker.Models.Location", b =>
                 {
                     b.HasOne("FitnessTracker.Models.ApplicationUser", "User")
                         .WithMany("Locations")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
