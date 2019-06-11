@@ -8,15 +8,19 @@ namespace FitnessTracker.Models
 {
     public class Location
     {
+        [Key]
         public int LocationId { get; set; }
 
         [Required]
         public string Name { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
+        [Required]
         public ApplicationUser User { get; set; }
+
+
         public virtual ICollection<Exercise> Exercises { get; set; }
     }
 }

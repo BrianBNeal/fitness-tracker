@@ -8,16 +8,26 @@ namespace FitnessTracker.Models
 {
     public class Exercise
     {
+        [Key]
         public int ExerciseId { get; set; }
 
         [Required]
-        public int UserId { get; set; }
+        public string UserId { get; set; }
+
+        [Required]
+        public ApplicationUser User { get; set; }
 
         [Required]
         public int LocationId { get; set; }
 
         [Required]
+        public Location Location { get; set; }
+
+        [Required]
         public int ExerciseTypeId { get; set; }
+
+        [Required]
+        public ExerciseType ExerciseType { get; set; }
 
         [Required]
         public int Duration { get; set; }
@@ -30,8 +40,5 @@ namespace FitnessTracker.Models
 
         public string Comments { get; set; }
 
-        public ApplicationUser User { get; set; }
-        public Location Location { get; set; }
-        public ExerciseType ExerciseType { get; set; }
     }
 }

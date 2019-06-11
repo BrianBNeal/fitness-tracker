@@ -8,6 +8,7 @@ namespace FitnessTracker.Models
 {
     public class Motivation
     {
+        [Key]
         public int MotivationId { get; set; }
 
         [Required]
