@@ -1,7 +1,30 @@
-﻿@{
+﻿@model FitnessTracker.Models.ViewModels.HomeViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Fitness Tracker</h1>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <h4>Current Goal</h4>
+                <h6>@Model.GoalProgressPercentage% Complete</h6>
+            </div>
+            <div class="col-sm-6">
+                <div class="progress" style="height: 35px">
+                    <div class="progress-bar @Model.ProgressColor" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="@Model.GoalProgressPercentage" style="@($"width: {Model.GoalProgressPercentage}%")"></div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div>@Model.GoalProgressMinutes of @Model.Goal.Target mins</div>
+                <div>by @Model.Goal.EndDate</div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <a class="btn btn-primary" asp-controller="Exercises" asp-action="Create">Log Activity</a>
+    </div>
 </div>

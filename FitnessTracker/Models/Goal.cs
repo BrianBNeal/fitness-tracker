@@ -16,11 +16,12 @@ namespace FitnessTracker.Models
 
         [Required]
         public ApplicationUser User { get; set; }
-        
+
         [Required]
         public DateTime StartDate { get; set; }
 
         [Required]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString ="{M/d/yyyy}")]
         public DateTime EndDate { get; set; }
 
         [Required]
