@@ -34,6 +34,8 @@ namespace FitnessTracker.Controllers
             var applicationDbContext = _context.Exercises
                 .Include(e => e.ExerciseType)
                 .Include(e => e.Location)
+                .Include(e => e.ExertionLevel)
+                .Include(e => e.EnjoymentLevel)
                 .Where(e => e.User == user);
 
             return View(await applicationDbContext.ToListAsync());
