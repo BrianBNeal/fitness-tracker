@@ -4,14 +4,16 @@ using FitnessTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FitnessTracker.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190613183801_RequiredEnjoymentAndExertion")]
+    partial class RequiredEnjoymentAndExertion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,8 +29,6 @@ namespace FitnessTracker.Data.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("SelectListDescription");
-
                     b.HasKey("EnjoymentLevelId");
 
                     b.ToTable("EnjoymentLevels");
@@ -42,8 +42,7 @@ namespace FitnessTracker.Data.Migrations
 
                     b.Property<string>("Comments");
 
-                    b.Property<DateTime>("DateLogged")
-                        .ValueGeneratedOnAdd();
+                    b.Property<DateTime>("DateLogged");
 
                     b.Property<int>("Duration");
 
@@ -99,8 +98,6 @@ namespace FitnessTracker.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description");
-
-                    b.Property<string>("SelectListDescription");
 
                     b.HasKey("ExertionLevelId");
 

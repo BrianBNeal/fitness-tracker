@@ -11,6 +11,7 @@ namespace FitnessTracker.Models
         [Key]
         public int ExertionLevelId { get; set; }
         public string Description { get; set; }
+        public string SelectListDescription { get; set; }
         public virtual ICollection<Exercise> Exercises { get; set; }
     }
 }

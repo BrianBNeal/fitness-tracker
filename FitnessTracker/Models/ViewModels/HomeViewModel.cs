@@ -13,7 +13,7 @@ namespace FitnessTracker.Models.ViewModels
 
         [Display(Name = "Progress")]
         public int GoalProgressMinutes { get; set; }
-        public double GoalProgressPercentage => ((double)GoalProgressMinutes / (double)Goal.Target) * 100;
+        public double GoalProgressPercentage => Math.Round(((double)GoalProgressMinutes / (double)Goal.Target) * 100);
         public string ProgressColor
         {
             get

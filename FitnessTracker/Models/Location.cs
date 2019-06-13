@@ -17,7 +17,6 @@ namespace FitnessTracker.Models
         [Required]
         public string UserId { get; set; }
 
-        [Required]
         public ApplicationUser User { get; set; }
 
 
