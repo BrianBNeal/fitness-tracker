@@ -62,6 +62,8 @@ namespace FitnessTracker.Controllers
         // GET: Exercises/Create
         public IActionResult Create()
         {
+            ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels, "ExertionLevelId", "Description");
+            ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels, "EnjoymentLevelId", "Description");
             ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes, "ExerciseTypeId", "Type");
             ViewData["LocationId"] = new SelectList(_context.Locations, "LocationId", "Name");
             return View();
@@ -72,14 +74,19 @@ namespace FitnessTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentRating,ExertionLevel,Comments")] Exercise exercise)
+        public async Task<IActionResult> Create([Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentLevelId,ExertionLevelId,Comments")] Exercise exercise)
         {
+            ModelState.Remove("UserId");
             if (ModelState.IsValid)
             {
+                var user = await GetCurrentUserAsync();
+                exercise.UserId = user.Id;
                 _context.Add(exercise);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
+            ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels, "ExertionLevelId", "Description");
+            ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels, "EnjoymentLevelId", "Description");
             ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes, "ExerciseTypeId", "Type", exercise.ExerciseTypeId);
             ViewData["LocationId"] = new SelectList(_context.Locations, "LocationId", "Name", exercise.LocationId);
             return View(exercise);
@@ -108,7 +115,7 @@ namespace FitnessTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentRating,ExertionLevel,Comments")] Exercise exercise)
+        public async Task<IActionResult> Edit(int id, [Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentRatingId,ExertionLevel,Comments")] Exercise exercise)
         {
             if (id != exercise.ExerciseId)
             {

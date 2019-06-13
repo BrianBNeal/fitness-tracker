@@ -4,35 +4,22 @@ using FitnessTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FitnessTracker.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190612143631_DateLogged")]
+    partial class DateLogged
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.3-servicing-35854")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("FitnessTracker.Models.EnjoymentLevel", b =>
-                {
-                    b.Property<int>("EnjoymentLevelId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("SelectListDescription");
-
-                    b.HasKey("EnjoymentLevelId");
-
-                    b.ToTable("EnjoymentLevels");
-                });
 
             modelBuilder.Entity("FitnessTracker.Models.Exercise", b =>
                 {
@@ -42,29 +29,24 @@ namespace FitnessTracker.Data.Migrations
 
                     b.Property<string>("Comments");
 
-                    b.Property<DateTime>("DateLogged")
-                        .ValueGeneratedOnAdd();
-
                     b.Property<int>("Duration");
 
-                    b.Property<int>("EnjoymentLevelId");
+                    b.Property<int>("EnjoymentRating");
 
                     b.Property<int>("ExerciseTypeId");
 
-                    b.Property<int>("ExertionLevelId");
+                    b.Property<int>("ExertionLevel");
 
                     b.Property<int>("LocationId");
 
                     b.Property<string>("UserId")
                         .IsRequired();
 
+                    b.Property<DateTime>("dateLogged");
+
                     b.HasKey("ExerciseId");
 
-                    b.HasIndex("EnjoymentLevelId");
-
                     b.HasIndex("ExerciseTypeId");
-
-                    b.HasIndex("ExertionLevelId");
 
                     b.HasIndex("LocationId");
 
@@ -90,21 +72,6 @@ namespace FitnessTracker.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ExerciseTypes");
-                });
-
-            modelBuilder.Entity("FitnessTracker.Models.ExertionLevel", b =>
-                {
-                    b.Property<int>("ExertionLevelId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("SelectListDescription");
-
-                    b.HasKey("ExertionLevelId");
-
-                    b.ToTable("ExertionLevels");
                 });
 
             modelBuilder.Entity("FitnessTracker.Models.Goal", b =>
@@ -347,19 +314,9 @@ namespace FitnessTracker.Data.Migrations
 
             modelBuilder.Entity("FitnessTracker.Models.Exercise", b =>
                 {
-                    b.HasOne("FitnessTracker.Models.EnjoymentLevel", "EnjoymentLevel")
-                        .WithMany("Exercises")
-                        .HasForeignKey("EnjoymentLevelId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("FitnessTracker.Models.ExerciseType", "ExerciseType")
                         .WithMany("Exercises")
                         .HasForeignKey("ExerciseTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("FitnessTracker.Models.ExertionLevel", "ExertionLevel")
-                        .WithMany("Exercises")
-                        .HasForeignKey("ExertionLevelId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FitnessTracker.Models.Location", "Location")

@@ -6,19 +6,12 @@ using System.Threading.Tasks;
 
 namespace FitnessTracker.Models
 {
-    public class ExerciseType
+    public class EnjoymentLevel
     {
         [Key]
-        public int ExerciseTypeId { get; set; }
-
-        [Required]
-        public string Type { get; set; }
-
-        [Required]
-        public string UserId { get; set; }
-
-        public ApplicationUser User { get; set; }
-
+        public int EnjoymentLevelId { get; set; }
+        public string Description { get; set; }
+        public string SelectListDescription { get; set; }
         public virtual ICollection<Exercise> Exercises { get; set; }
     }
 }
