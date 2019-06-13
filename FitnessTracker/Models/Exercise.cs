@@ -19,12 +19,14 @@ namespace FitnessTracker.Models
         public ApplicationUser User { get; set; }
 
         [Required]
+        [Display(Name ="Location")]
         public int LocationId { get; set; }
 
         [Required]
         public Location Location { get; set; }
 
         [Required]
+        [Display(Name ="Type of Activity")]
         public int ExerciseTypeId { get; set; }
 
         [Required]
@@ -34,12 +36,19 @@ namespace FitnessTracker.Models
         public int Duration { get; set; }
 
         [Required]
-        public int EnjoymentRating { get; set; }
+        [Display(Name ="Enjoyment Rating")]
+        public int EnjoymentLevelId { get; set; }
+
+        public EnjoymentLevel EnjoymentLevel { get; set; }
 
         [Required]
-        public int ExertionLevel { get; set; }
+        [Display(Name ="Exertion Level")]
+        public int ExertionLevelId { get; set; }
+
+        public ExertionLevel ExertionLevel { get; set; }
 
         [Required]
+        [Display(Name ="Date")]
         public DateTime DateLogged { get; set; }
 
         public string Comments { get; set; }

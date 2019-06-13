@@ -4,19 +4,14 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Add New Entry</h1>
 
-<h4>Exercise</h4>
 <hr />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="LocationId" class="control-label"></label>
                 <select asp-for="LocationId" class ="form-control" asp-items="ViewBag.LocationId"></select>
@@ -31,14 +26,14 @@
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EnjoymentRating" class="control-label"></label>
-                <input asp-for="EnjoymentRating" class="form-control" />
-                <span asp-validation-for="EnjoymentRating" class="text-danger"></span>
+                <label asp-for="EnjoymentLevelId" class="control-label"></label>
+                <input asp-for="EnjoymentLevelId" class="form-control" />
+                <span asp-validation-for="EnjoymentLevelId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ExertionLevel" class="control-label"></label>
-                <input asp-for="ExertionLevel" class="form-control" />
-                <span asp-validation-for="ExertionLevel" class="text-danger"></span>
+                <label asp-for="ExertionLevelId" class="control-label"></label>
+                <input asp-for="ExertionLevelId" class="form-control" />
+                <span asp-validation-for="ExertionLevelId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Comments" class="control-label"></label>

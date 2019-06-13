@@ -37,7 +37,7 @@ namespace FitnessTracker.Controllers
             var thisWeeksExercises = userExercises.Where(e => e.IsThisWeeksActivity());
 
             //total minutes of recent activity
-            var totalRecentExercise = thisWeeksExercises.Select(e => e.Duration).Sum();
+            var currentWeeklyTotal = thisWeeksExercises.Select(e => e.Duration).Sum();
 
             //current Goal for this user
             var goal = _context.Goals.Where(g => g.User == user && g.EndDate >= DateTime.Today).FirstOrDefault();
@@ -49,7 +49,7 @@ namespace FitnessTracker.Controllers
             {
                 User = user,
                 Goal = goal,
-                TotalRecentExercise = totalRecentExercise,
+                CurrentWeeklyTotal = currentWeeklyTotal,
                 GoalProgressMinutes = progress
             };
 

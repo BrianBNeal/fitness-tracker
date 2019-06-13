@@ -32,8 +32,10 @@ namespace FitnessTracker.Models.ViewModels
                 }
             }
         }
+
+        //total minutes for current week
         [Display(Name = "Recent Activity")]
-        public int TotalRecentExercise { get; set; }
+        public int CurrentWeeklyTotal { get; set; }
 
 
 

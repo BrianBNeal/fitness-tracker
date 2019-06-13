@@ -72,7 +72,7 @@ namespace FitnessTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentRating,ExertionLevel,Comments")] Exercise exercise)
+        public async Task<IActionResult> Create([Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentRatingId,ExertionLevel,Comments")] Exercise exercise)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace FitnessTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentRating,ExertionLevel,Comments")] Exercise exercise)
+        public async Task<IActionResult> Edit(int id, [Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentRatingId,ExertionLevel,Comments")] Exercise exercise)
         {
             if (id != exercise.ExerciseId)
             {

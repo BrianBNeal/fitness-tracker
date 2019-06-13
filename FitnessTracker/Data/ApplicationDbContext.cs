@@ -20,6 +20,9 @@ namespace FitnessTracker.Data
         public DbSet<Goal> Goals { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Motivation> Motivations { get; set; }
+        public DbSet<ExertionLevel> ExertionLevels { get; set; }
+        public DbSet<EnjoymentLevel> EnjoymentLevels { get; set; }
+
 
     }
 }
