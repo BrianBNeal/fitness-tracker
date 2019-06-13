@@ -19,13 +19,13 @@ namespace FitnessTracker.Models
         public ApplicationUser User { get; set; }
 
         [Required]
-        [Display(Name ="Location")]
+        [Display(Name = "Location")]
         public int LocationId { get; set; }
 
         public Location Location { get; set; }
 
         [Required]
-        [Display(Name ="Type of Activity")]
+        [Display(Name = "Type of Activity")]
         public int ExerciseTypeId { get; set; }
 
         public ExerciseType ExerciseType { get; set; }
@@ -34,13 +34,13 @@ namespace FitnessTracker.Models
         public int Duration { get; set; }
 
         [Required]
-        [Display(Name ="Enjoyment Rating")]
+        [Display(Name = "Enjoyment Rating")]
         public int EnjoymentLevelId { get; set; }
 
         public EnjoymentLevel EnjoymentLevel { get; set; }
 
         [Required]
-        [Display(Name ="Exertion Level")]
+        [Display(Name = "Exertion Level")]
         public int ExertionLevelId { get; set; }
 
         public ExertionLevel ExertionLevel { get; set; }
@@ -52,7 +52,6 @@ namespace FitnessTracker.Models
         public DateTime DateLogged { get; set; } = DateTime.UtcNow;
 
         public string Comments { get; set; }
-
 
         public bool IsThisWeeksActivity()
         {
