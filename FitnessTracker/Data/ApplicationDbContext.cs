@@ -14,7 +14,7 @@ namespace FitnessTracker.Data
         {
         }
 
-        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<ExerciseType> ExerciseTypes { get; set; }
         public DbSet<Goal> Goals { get; set; }

@@ -47,8 +47,6 @@ namespace FitnessTracker.Models
         public ExertionLevel ExertionLevel { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Display(Name = "Date")]
         public DateTime DateLogged { get; set; } = DateTime.UtcNow;
 

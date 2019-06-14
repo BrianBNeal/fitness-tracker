@@ -81,10 +81,12 @@ namespace FitnessTracker.Controllers
         public async Task<IActionResult> Create([Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentLevelId,ExertionLevelId,Comments")] Exercise exercise)
         {
             ModelState.Remove("UserId");
+            ModelState.Remove("DateLogged");
             if (ModelState.IsValid)
             {
                 var user = await GetCurrentUserAsync();
                 exercise.UserId = user.Id;
+                exercise.DateLogged = DateTime.UtcNow;
                 _context.Add(exercise);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");

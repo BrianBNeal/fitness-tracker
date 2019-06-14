@@ -9,6 +9,7 @@ using FitnessTracker.Data;
 using Microsoft.AspNetCore.Identity;
 using FitnessTracker.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace FitnessTracker.Controllers
 {
@@ -67,6 +68,23 @@ namespace FitnessTracker.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Settings()
+        {
+            var user = await GetCurrentUserAsync();
+            var goals = _context.Goals.Where(g => g.User == user).ToList();
+            var exercises = _context.Exercises.Where(e => e.User == user).ToList();
+            var exerciseTypes = _context.ExerciseTypes.Where(et => et.User == user).ToList();
+            var locations = _context.Locations.Where(l => l.User == user).ToList();
+
+            user.Goals = goals;
+            user.Exercises = exercises;
+            user.ExerciseTypes = exerciseTypes;
+            user.Locations = locations;
+
+            return View(user);
         }
     }
 }
