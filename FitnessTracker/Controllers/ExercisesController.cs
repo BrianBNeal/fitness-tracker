@@ -166,6 +166,8 @@ namespace FitnessTracker.Controllers
             var exercise = await _context.Exercises
                 .Include(e => e.ExerciseType)
                 .Include(e => e.Location)
+                .Include(e => e.ExertionLevel)
+                .Include(e => e.EnjoymentLevel)
                 .FirstOrDefaultAsync(m => m.ExerciseId == id);
             if (exercise == null)
             {
