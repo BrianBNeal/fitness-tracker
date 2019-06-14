@@ -25,9 +25,10 @@ namespace FitnessTracker.Models
         public Location Location { get; set; }
 
         [Required]
-        [Display(Name = "Type of Activity")]
+        [Display(Name = "Activity")]
         public int ExerciseTypeId { get; set; }
 
+        [Display(Name ="Activity")]
         public ExerciseType ExerciseType { get; set; }
 
         [Required]

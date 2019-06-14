@@ -5,10 +5,11 @@
 }
 
 <h1>My Activity Log</h1>
-
+<br />
 <p>
-    <a class="btn btn-primary" asp-action="Create">Log Activity</a>
+    <a class="btn btn-primary" asp-action="Create">Log New Activity</a>
 </p>
+<br />
 <table class="table">
     <thead>
         <tr>
@@ -16,7 +17,13 @@
                 @Html.DisplayNameFor(model => model.DateLogged)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ExerciseType)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EnjoymentLevelId)
@@ -26,12 +33,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Comments)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExerciseType)
             </th>
             <th></th>
         </tr>
@@ -46,7 +47,13 @@
                     @Html.DisplayFor(modelItem => item.DateLogged)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Duration)
+                    @Html.DisplayFor(modelItem => item.ExerciseType.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration) mins
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location.Name)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EnjoymentLevel.Description)
@@ -56,12 +63,6 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Comments)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Location.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExerciseType.Type)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ExerciseId">Edit</a> |
