@@ -48,7 +48,7 @@ namespace FitnessTracker.Models
 
         [Required]
         [DataType(DataType.Date)]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [Display(Name = "Date")]
         public DateTime DateLogged { get; set; } = DateTime.UtcNow;
 
