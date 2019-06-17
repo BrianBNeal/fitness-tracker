@@ -12,6 +12,7 @@ namespace FitnessTracker.Models
         public int ExerciseTypeId { get; set; }
 
         [Required]
+        [Display(Name ="Activity Name")]
         public string Type { get; set; }
 
         [Required]

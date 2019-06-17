@@ -7,64 +7,81 @@
 <h1>Settings</h1>
 <br />
 
-<div class="card">
-    <div class="card-header" id="settingsActivities">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseActivities" aria-expanded="true" aria-controls="collapseActivities">
-            Activities
-        </button>
+<div class="container">
+    <div class="row">
+        <h4>Activities</h4>
+    </div>
+    <div class="row">
+        <a asp-action="Create" asp-controller="ExerciseTypes">Add Activity</a>
     </div>
 
-    <div id="collapseActivities" class="collapse" aria-labelledby="settingsActivities">
-        <div class="card-body">
-            @if (Model.ExerciseTypes != null)
-            {
-                foreach (var item in Model.ExerciseTypes)
+    @if (Model.ExerciseTypes != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Activity Name
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (ExerciseType type in Model.ExerciseTypes)
                 {
-                    <p>@item.Type</p>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(exType => type.Type)
+                    </td>
+                    <td>
+                        <a asp-controller="ExerciseTypes" asp-action="Edit" asp-route-id="@type.ExerciseTypeId">Edit</a> | <a asp-controller="ExerciseTypes" asp-action="Delete" asp-route-id="@type.ExerciseTypeId">Delete</a>
+                    </td>
+                </tr>
                 }
-            }
+            </tbody>
+        </table>
+    }
+
+
+    <div class="card">
+        <div class="card-header" id="settingsLocations">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLocations" aria-expanded="true" aria-controls="collapseLocations">
+                Locations
+            </button>
+        </div>
+
+        <div id="collapseLocations" class="collapse" aria-labelledby="settingsLocations">
+            <div class="card-body">
+                @if (Model.Locations != null)
+                {
+                    foreach (var item in Model.Locations)
+                    {
+                        <p>@item.Name</p>
+                    }
+                }
+            </div>
         </div>
     </div>
-</div>
 
 
-<div class="card">
-    <div class="card-header" id="settingsLocations">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLocations" aria-expanded="true" aria-controls="collapseLocations">
-            Locations
-        </button>
-    </div>
-
-    <div id="collapseLocations" class="collapse" aria-labelledby="settingsLocations">
-        <div class="card-body">
-            @if (Model.Locations != null)
-            {
-                foreach (var item in Model.Locations)
-                {
-                    <p>@item.Name</p>
-                }
-            }
+    <div class="card">
+        <div class="card-header" id="settingsGoals">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseGoals" aria-expanded="false" aria-controls="collapseGoals">
+                Goals
+            </button>
         </div>
-    </div>
-</div>
 
-
-<div class="card">
-    <div class="card-header" id="settingsGoals">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseGoals" aria-expanded="false" aria-controls="collapseGoals">
-            Goals
-        </button>
-    </div>
-
-    <div id="collapseGoals" class="collapse" aria-labelledby="settingsGoals">
-        <div class="card-body">
-            @if (Model.Goals != null)
-            {
-                foreach (var item in Model.Goals)
+        <div id="collapseGoals" class="collapse" aria-labelledby="settingsGoals">
+            <div class="card-body">
+                @if (Model.Goals != null)
                 {
-                    <p>@item.Target</p>
+                    foreach (var item in Model.Goals)
+                    {
+                        <p>@item.Target</p>
+                    }
                 }
-            }
+            </div>
         </div>
     </div>
 </div>

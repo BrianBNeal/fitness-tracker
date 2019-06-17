@@ -13,31 +13,41 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="LocationId" class="control-label"></label>
-                <select asp-for="LocationId" class ="form-control" asp-items="ViewBag.LocationId"></select>
+                <label asp-for="ExerciseTypeId" class="control-label"></label>
+                <select asp-for="ExerciseTypeId" class="form-control" asp-items="ViewBag.ExerciseTypeId">
+                    <option value="">What you did...</option>
+                </select>
+                <a class="btn btn-link btn-sm" asp-controller="ExerciseTypes" asp-action="Create">Add New Activity</a>
             </div>
             <div class="form-group">
-                <label asp-for="ExerciseTypeId" class="control-label"></label>
-                <select asp-for="ExerciseTypeId" class ="form-control" asp-items="ViewBag.ExerciseTypeId"></select>
+                <label asp-for="LocationId" class="control-label"></label>
+                <select asp-for="LocationId" class="form-control" asp-items="ViewBag.LocationId">
+                    <option value="">Where you were...</option>
+                </select>
+                <a class="btn btn-link btn-sm" asp-controller="Locations" asp-action="Create">Add New Location</a>
             </div>
             <div class="form-group">
                 <label asp-for="Duration" class="control-label"></label>
-                <input asp-for="Duration" class="form-control" />
+                <input asp-for="Duration" class="form-control" placeholder="How long it took (in minutes)..." />
                 <span asp-validation-for="Duration" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="EnjoymentLevelId" class="control-label"></label>
-                <select asp-for="EnjoymentLevelId" class="form-control" asp-items="ViewBag.EnjoymentLevelId"></select>
+                <select asp-for="EnjoymentLevelId" class="form-control" asp-items="ViewBag.EnjoymentLevelId">
+                    <option value="">How much you enjoyed yourself...</option>
+                </select>
                 <span asp-validation-for="EnjoymentLevelId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ExertionLevelId" class="control-label"></label>
-                <select asp-for="ExertionLevelId" class="form-control" asp-items="ViewBag.ExertionLevelId"></select>
+                <select asp-for="ExertionLevelId" class="form-control" asp-items="ViewBag.ExertionLevelId">
+                    <option value="">How much effort you put in...</option>
+                </select>
                 <span asp-validation-for="ExertionLevelId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Comments" class="control-label"></label>
-                <input asp-for="Comments" class="form-control" />
+                <input asp-for="Comments" class="form-control" placeholder="Any thoughts? You can refer to these later..." />
                 <span asp-validation-for="Comments" class="text-danger"></span>
             </div>
             <div class="form-group">
