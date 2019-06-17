@@ -31,14 +31,15 @@ namespace FitnessTracker.Controllers
         {
             var user = await GetCurrentUserAsync();
 
-            var applicationDbContext = _context.Exercises
+            var exercises = _context.Exercises
                 .Include(e => e.ExerciseType)
                 .Include(e => e.Location)
                 .Include(e => e.ExertionLevel)
                 .Include(e => e.EnjoymentLevel)
-                .Where(e => e.User == user);
+                .Where(e => e.User == user)
+                .OrderByDescending(e => e.DateLogged);
 
-            return View(await applicationDbContext.ToListAsync());
+            return View(await exercises.ToListAsync());
         }
 
         // GET: Exercises/Details/5

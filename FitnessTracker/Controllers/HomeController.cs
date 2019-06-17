@@ -37,14 +37,22 @@ namespace FitnessTracker.Controllers
             //exercises by this user during current week
             var thisWeeksExercises = userExercises.Where(e => e.IsThisWeeksActivity());
 
-            //total minutes of recent activity
-            var currentWeeklyTotal = thisWeeksExercises.Select(e => e.Duration).Sum();
+            //total minutes of this week's activity
+            int currentWeeklyTotal = 0;
+            if (thisWeeksExercises != null)
+            {
+                currentWeeklyTotal = thisWeeksExercises.Select(e => e.Duration).Sum();
+            }
 
             //current Goal for this user
-            var goal = _context.Goals.Where(g => g.User == user && g.EndDate >= DateTime.Today).FirstOrDefault();
+            var goal = _context.Goals.OrderByDescending(g => g.StartDate).Where(g => g.User == user && g.EndDate >= DateTime.Today).FirstOrDefault();
 
             //exercise progress toward current Goal
-            var progress = _context.Exercises.Where(e => e.User == user && e.DateLogged >= goal.StartDate).Select(e => e.Duration).Sum();
+            int progress = 0;
+            if (goal != null)
+            {
+                progress = _context.Exercises.Where(e => e.User == user && e.DateLogged >= goal.StartDate).Select(e => e.Duration).Sum();
+            }
 
             HomeViewModel model = new HomeViewModel
             {

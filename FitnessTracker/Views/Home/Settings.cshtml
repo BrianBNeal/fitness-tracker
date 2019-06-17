@@ -7,60 +7,64 @@
 <h1>Settings</h1>
 <br />
 
-    <div class="card">
-        <div class="card-header" id="settingsActivities">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseActivities" aria-expanded="true" aria-controls="collapseActivities">
-                My Activities
-            </button>
-        </div>
-
-        <div id="collapseActivities" class="collapse" aria-labelledby="settingsActivities">
-            <div class="card-body">
-                @* CONTENT GOES HERE *@
-                USER'S ACTIVITIES WILL SHOW HERE
-            </div>
-        </div>
+<div class="card">
+    <div class="card-header" id="settingsActivities">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseActivities" aria-expanded="true" aria-controls="collapseActivities">
+            Activities
+        </button>
     </div>
 
-
-    <div class="card">
-        <div class="card-header" id="settingsLocations">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLocations" aria-expanded="true" aria-controls="collapseLocations">
-                My Locations
-            </button>
-        </div>
-
-        <div id="collapseLocations" class="collapse" aria-labelledby="settingsLocations">
-            <div class="card-body">
-                @* CONTENT GOES HERE *@
-                USER'S LOCATIONS WILL SHOW HERE
-            </div>
+    <div id="collapseActivities" class="collapse" aria-labelledby="settingsActivities">
+        <div class="card-body">
+            @if (Model.ExerciseTypes != null)
+            {
+                foreach (var item in Model.ExerciseTypes)
+                {
+                    <p>@item.Type</p>
+                }
+            }
         </div>
     </div>
+</div>
 
 
-    <div class="card">
-        <div class="card-header" id="settingsGoals">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseGoals" aria-expanded="false" aria-controls="collapseGoals">
-                My Goals
-            </button>
-        </div>
-
-        <div id="collapseGoals" class="collapse" aria-labelledby="settingsGoals">
-            <div class="card-body">
-                @* CONTENT GOES HERE *@
-                USER'S GOALS WILL SHOW HERE
-            </div>
-        </div>
+<div class="card">
+    <div class="card-header" id="settingsLocations">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLocations" aria-expanded="true" aria-controls="collapseLocations">
+            Locations
+        </button>
     </div>
 
+    <div id="collapseLocations" class="collapse" aria-labelledby="settingsLocations">
+        <div class="card-body">
+            @if (Model.Locations != null)
+            {
+                foreach (var item in Model.Locations)
+                {
+                    <p>@item.Name</p>
+                }
+            }
+        </div>
+    </div>
+</div>
 
 
+<div class="card">
+    <div class="card-header" id="settingsGoals">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseGoals" aria-expanded="false" aria-controls="collapseGoals">
+            Goals
+        </button>
+    </div>
 
-
-<br />
-
-<h5>My Locations</h5>
-<br />
-
-<h5>My Goals</h5>
+    <div id="collapseGoals" class="collapse" aria-labelledby="settingsGoals">
+        <div class="card-body">
+            @if (Model.Goals != null)
+            {
+                foreach (var item in Model.Goals)
+                {
+                    <p>@item.Target</p>
+                }
+            }
+        </div>
+    </div>
+</div>
