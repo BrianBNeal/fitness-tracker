@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-sm-3">
                     <div>@Model.GoalProgressMinutes of @Model.Goal.Target mins</div>
-                    <div>by @Model.Goal.EndDate</div>
+                    <div>by @Html.DisplayFor(m => Model.Goal.EndDate)</div>
                 </div>
             </div>
         </div>

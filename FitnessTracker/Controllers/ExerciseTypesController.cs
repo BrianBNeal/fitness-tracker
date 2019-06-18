@@ -81,7 +81,6 @@ namespace FitnessTracker.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", exerciseType.UserId);
             return View(exerciseType);
         }
 
@@ -115,14 +114,32 @@ namespace FitnessTracker.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Settings","Home");
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", exerciseType.UserId);
             return View(exerciseType);
         }
 
         // GET: ExerciseTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var exerciseType = await _context.ExerciseTypes
+                .Include(e => e.User)
+                .FirstOrDefaultAsync(m => m.ExerciseTypeId == id);
+            if (exerciseType == null)
+            {
+                return NotFound();
+            }
+
+            return View(exerciseType);
+        }
+
+        // GET: ExerciseTypes/Confirm/5
+        public async Task<IActionResult> Confirm(int? id)
         {
             if (id == null)
             {
@@ -148,7 +165,7 @@ namespace FitnessTracker.Controllers
             var exerciseType = await _context.ExerciseTypes.FindAsync(id);
             _context.ExerciseTypes.Remove(exerciseType);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Settings");
         }
 
         private bool ExerciseTypeExists(int id)

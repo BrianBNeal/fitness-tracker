@@ -92,8 +92,8 @@ namespace FitnessTracker.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             }
-            ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels, "ExertionLevelId", "SelectListDescription");
-            ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels, "EnjoymentLevelId", "SelectListDescription");
+            ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels, "ExertionLevelId", "SelectListDescription", exercise.ExertionLevelId);
+            ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels, "EnjoymentLevelId", "SelectListDescription", exercise.EnjoymentLevelId);
             ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes, "ExerciseTypeId", "Type", exercise.ExerciseTypeId);
             ViewData["LocationId"] = new SelectList(_context.Locations, "LocationId", "Name", exercise.LocationId);
             return View(exercise);
@@ -151,8 +151,8 @@ namespace FitnessTracker.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels, "ExertionLevelId", "SelectListDescription");
-            ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels, "EnjoymentLevelId", "SelectListDescription");
+            ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels, "ExertionLevelId", "SelectListDescription", exercise.ExertionLevelId);
+            ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels, "EnjoymentLevelId", "SelectListDescription", exercise.EnjoymentLevelId);
             ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes, "ExerciseTypeId", "Type", exercise.ExerciseTypeId);
             ViewData["LocationId"] = new SelectList(_context.Locations, "LocationId", "Name", exercise.LocationId);
             return View(exercise);
