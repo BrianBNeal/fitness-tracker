@@ -5,28 +5,57 @@
 }
 
 <div class="text-center">
+
     <h1 class="display-4">Fitness Tracker</h1>
+
     <hr />
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-3">
-                <h4>Current Goal</h4>
-                <h6>@Model.GoalProgressPercentage% Complete</h6>
-            </div>
-            <div class="col-sm-6">
-                <div class="progress" style="height: 35px">
-                    <div class="progress-bar @Model.ProgressColor" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="@Model.GoalProgressPercentage" style="@($"width: {Model.GoalProgressPercentage}%")"></div>
+
+    @{
+
+    //GOAL SECTION
+
+        if (Model.Goal == null)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <h5>You currently have no goal set. Would you like to make one?</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <a class="btn btn-success" asp-controller="Goals" asp-action="Create">Set a Goal</a>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-3">
-                <div>@Model.GoalProgressMinutes of @Model.Goal.Target mins</div>
-                <div>by @Model.Goal.EndDate</div>
+        }
+        
+        else
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <h4>Current Goal</h4>
+                        <h6>@Model.GoalProgressPercentage% Complete</h6>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="progress" style="height: 35px">
+                            <div class="progress-bar @Model.ProgressColor" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="@Model.GoalProgressPercentage" style="@($"width: {Model.GoalProgressPercentage}%")"></div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <h4>@Model.GoalProgressMinutes of @Model.Goal.Target mins</h4>
+                        <h6>by @Html.DisplayFor(m => Model.Goal.EndDate)</h6>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        }
+    }
 
     <hr />
 
+    @* WEEKLY ACTIVITY *@
+    
     <div>
         <h3>
             You have been active for @Model.CurrentWeeklyTotal minutes this week

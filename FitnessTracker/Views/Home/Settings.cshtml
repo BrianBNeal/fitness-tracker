@@ -1,0 +1,215 @@
+﻿@model FitnessTracker.Models.ViewModels.SettingsViewModel
+
+@{
+    ViewData["Title"] = "Settings";
+}
+
+<h1>Settings</h1>
+<br />
+<br />
+<div class="container">
+
+
+    @*===== ACTIVITIES =====*@
+
+    <div class="row">
+        <h4>Activities</h4>
+        <a class="btn btn-link btn-sm" asp-action="Create" asp-controller="ExerciseTypes">Add Activity</a>
+    </div>
+
+    @if (Model.User.ExerciseTypes != null)
+    {
+        if (Model.User.ExerciseTypes.Count > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Activity Name
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ExerciseType type in Model.User.ExerciseTypes)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(exType => type.Type)
+                            </td>
+                            <td>
+                                <a asp-controller="ExerciseTypes" asp-action="Edit" asp-route-id="@type.ExerciseTypeId">Edit</a> | <a asp-controller="ExerciseTypes" asp-action="Delete" asp-route-id="@type.ExerciseTypeId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <hr />
+            <h5>You don't have any activity types yet.</h5>
+            <hr />
+        }
+    }
+    else
+    {
+        <hr />
+        <h5>You don't have any activity types yet.</h5>
+        <hr />
+    }
+    <br />
+
+
+    @*===== LOCATIONS =====*@
+
+    <div class="row">
+        <h4>Locations</h4>
+        <a class="btn btn-link btn-sm" asp-action="Create" asp-controller="Locations">Add Location</a>
+    </div>
+
+    @if (Model.User.Locations != null)
+    {
+        if (Model.User.Locations.Count > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Location Name
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (Location location in Model.User.Locations)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(l => location.Name)
+                            </td>
+                            <td>
+                                <a asp-controller="Locations" asp-action="Edit" asp-route-id="@location.LocationId">Edit</a> | <a asp-controller="Locations" asp-action="Delete" asp-route-id="@location.LocationId">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <hr />
+            <h5>You don't have any locations yet.</h5>
+            <hr />
+        }
+    }
+    <br />
+
+
+    @*===== GOALS =====*@
+
+
+    <div class="row">
+        <h4>Goals</h4>
+    </div>
+    <hr />
+    @if (Model.User.Goals != null)
+    {
+        if (Model.User.Goals.Count > 0)
+        {
+
+
+            @*===== CURRENT GOAL =====*@
+
+            <div class="row">
+                <h5>Current Goal</h5>
+                @{ if (Model.CurrentGoal == null)
+                    {
+                        <a class="btn btn-link btn-sm" asp-action="Create" asp-controller="Goals">Set Goal</a>
+                    }
+                }
+            </div>
+            if (Model.CurrentGoal != null)
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Dates
+                            </th>
+                            <th>
+                                Target Amount of Activity
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(g => Model.CurrentGoal.StartDate) - @Html.DisplayFor(g => Model.CurrentGoal.EndDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(g => Model.CurrentGoal.Target)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <h6>You don't currently have a goal in progress.</h6>
+            }
+            <hr />
+            <br />
+
+
+            @*===== ALL GOALS =====*@
+
+            <h5>All Goals</h5>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Dates
+                        </th>
+                        <th>
+                            Target Amount of Activity
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (Goal goal in Model.User.Goals)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(g => goal.StartDate) - @Html.DisplayFor(g => goal.EndDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(g => goal.Target)
+                            </td>
+                            @{
+                                if (goal == Model.CurrentGoal)
+                                {
+                                    <td>
+                                        <a asp-controller="Goals" asp-action="Edit" asp-route-id="@goal.GoalId">Edit</a> | <a asp-controller="Goals" asp-action="Delete" asp-route-id="@goal.GoalId">Delete</a>
+                                    </td>
+                                }
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <hr />
+            <h5>You haven't set any goals yet.</h5>
+            <a class="btn btn-link btn-sm" asp-action="Create" asp-controller="Goals">Set Goal</a>
+            <hr />
+        }
+    }
+</div>

@@ -1,0 +1,27 @@
+﻿@model FitnessTracker.Models.ExerciseType
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Please Confirm That You Want To Delete This</h1>
+
+<h3>THIS ACTION WILL PERMANENTLY DELETE ALL ENTRIES THAT USE THIS ACTIVITY!</h3>
+<div>
+    <h4>ExerciseType</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ExerciseTypeId" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-controller="Home" asp-action="Settings">Back</a>
+    </form>
+</div>

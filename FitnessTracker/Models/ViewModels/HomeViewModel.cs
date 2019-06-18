@@ -12,7 +12,7 @@ namespace FitnessTracker.Models.ViewModels
         public Goal Goal { get; set; }
 
         [Display(Name = "Progress")]
-        public int GoalProgressMinutes { get; set; }
+        public int? GoalProgressMinutes { get; set; }
         public double GoalProgressPercentage => Math.Round(((double)GoalProgressMinutes / (double)Goal.Target) * 100);
         public string ProgressColor
         {
@@ -22,13 +22,21 @@ namespace FitnessTracker.Models.ViewModels
                 {
                     return "bg-danger";
                 }
-                else if (GoalProgressPercentage < 75)
+                else if (GoalProgressPercentage < 70)
                 {
                     return "bg-warning";
                 }
-                else
+                else if (GoalProgressPercentage < 90)
+                {
+                    return "bg-info";
+                }
+                else if (GoalProgressPercentage < 100)
                 {
                     return "bg-success";
+                }
+                else
+                {
+                    return "bg-success progress-bar-striped progress-bar-animated";
                 }
             }
         }
