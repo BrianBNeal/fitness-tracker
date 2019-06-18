@@ -126,7 +126,7 @@ namespace FitnessTracker.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Settings", "Home");
             }
             ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", goal.UserId);
             return View(goal);

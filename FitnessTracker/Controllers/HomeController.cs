@@ -82,7 +82,7 @@ namespace FitnessTracker.Controllers
         public async Task<IActionResult> Settings()
         {
             var user = await GetCurrentUserAsync();
-            var goals = await _context.Goals.Where(g => g.User == user).OrderByDescending(g => g.StartDate).ToListAsync();
+            var goals = await _context.Goals.OrderByDescending(g => g.EndDate).Where(g => g.User == user) .ToListAsync();
             var exercises = await _context.Exercises.Where(e => e.User == user).ToListAsync();
             var exerciseTypes = await _context.ExerciseTypes.Where(et => et.User == user).ToListAsync();
             var locations = await _context.Locations.Where(l => l.User == user).ToListAsync();

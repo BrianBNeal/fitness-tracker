@@ -6,8 +6,12 @@
 
 <h1>Settings</h1>
 <br />
-
+<br />
 <div class="container">
+
+
+    @*===== ACTIVITIES =====*@
+
     <div class="row">
         <h4>Activities</h4>
         <a class="btn btn-link btn-sm" asp-action="Create" asp-controller="ExerciseTypes">Add Activity</a>
@@ -27,7 +31,6 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     @foreach (ExerciseType type in Model.User.ExerciseTypes)
                     {
                         <tr>
@@ -49,6 +52,16 @@
             <hr />
         }
     }
+    else
+    {
+        <hr />
+        <h5>You don't have any activity types yet.</h5>
+        <hr />
+    }
+    <br />
+
+
+    @*===== LOCATIONS =====*@
 
     <div class="row">
         <h4>Locations</h4>
@@ -91,18 +104,34 @@
             <hr />
         }
     }
+    <br />
+
+
+    @*===== GOALS =====*@
+
 
     <div class="row">
         <h4>Goals</h4>
     </div>
-
+    <hr />
     @if (Model.User.Goals != null)
     {
         if (Model.User.Goals.Count > 0)
         {
+
+
+            @*===== CURRENT GOAL =====*@
+
+            <div class="row">
+                <h5>Current Goal</h5>
+                @{ if (Model.CurrentGoal == null)
+                    {
+                        <a class="btn btn-link btn-sm" asp-action="Create" asp-controller="Goals">Set Goal</a>
+                    }
+                }
+            </div>
             if (Model.CurrentGoal != null)
             {
-                <h5>Current Goal</h5>
                 <table class="table">
                     <thead>
                         <tr>
@@ -126,6 +155,18 @@
                     </tbody>
                 </table>
             }
+            else
+            {
+                <h6>You don't currently have a goal in progress.</h6>
+            }
+            <hr />
+            <br />
+
+
+            @*===== ALL GOALS =====*@
+
+            <h5>All Goals</h5>
+
             <table class="table">
                 <thead>
                     <tr>
@@ -149,9 +190,15 @@
                             <td>
                                 @Html.DisplayFor(g => goal.Target)
                             </td>
-                            <td>
-                                <a asp-controller="Goals" asp-action="Edit" asp-route-id="@goal.GoalId">Edit</a> | <a asp-controller="Goals" asp-action="Delete" asp-route-id="@goal.GoalId">Delete</a>
-                            </td>
+                            @{
+                                if (goal == Model.CurrentGoal)
+                                {
+                                    <td>
+                                        <a asp-controller="Goals" asp-action="Edit" asp-route-id="@goal.GoalId">Edit</a> | <a asp-controller="Goals" asp-action="Delete" asp-route-id="@goal.GoalId">Delete</a>
+                                    </td>
+                                }
+                            }
+
                         </tr>
                     }
                 </tbody>
@@ -160,7 +207,8 @@
         else
         {
             <hr />
-            <h5>You don't have any goals set yet.</h5>
+            <h5>You haven't set any goals yet.</h5>
+            <a class="btn btn-link btn-sm" asp-action="Create" asp-controller="Goals">Set Goal</a>
             <hr />
         }
     }

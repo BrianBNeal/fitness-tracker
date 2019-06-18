@@ -23,7 +23,7 @@ namespace FitnessTracker.Models
         [Required]
         [DataType(DataType.Date),
             Display(Name ="End Date"),
-            DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:M/d/yyyy}")]
+            DisplayFormat(DataFormatString = "{0:M/d/yyyy}")]
         public DateTime EndDate { get; set; }
 
         [Required]
