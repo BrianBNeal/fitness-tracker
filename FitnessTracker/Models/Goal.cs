@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FitnessTracker.Modules;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace FitnessTracker.Models
         [DataType(DataType.Date),
             Display(Name ="End Date"),
             DisplayFormat(DataFormatString = "{0:M/d/yyyy}")]
+        [ValidateDateRange]
         public DateTime EndDate { get; set; }
 
         [Required]

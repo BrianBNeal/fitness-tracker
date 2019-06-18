@@ -26,31 +26,31 @@ namespace FitnessTracker.Controllers
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        // GET: Goals
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Goals.Include(g => g.User);
-            return View(await applicationDbContext.ToListAsync());
-        }
+        //// GET: Goals
+        //public async Task<IActionResult> Index()
+        //{
+        //    var applicationDbContext = _context.Goals.Include(g => g.User);
+        //    return View(await applicationDbContext.ToListAsync());
+        //}
 
-        // GET: Goals/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: Goals/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var goal = await _context.Goals
-                .Include(g => g.User)
-                .FirstOrDefaultAsync(m => m.GoalId == id);
-            if (goal == null)
-            {
-                return NotFound();
-            }
+        //    var goal = await _context.Goals
+        //        .Include(g => g.User)
+        //        .FirstOrDefaultAsync(m => m.GoalId == id);
+        //    if (goal == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(goal);
-        }
+        //    return View(goal);
+        //}
 
         // GET: Goals/Create
         public IActionResult Create()
@@ -159,7 +159,7 @@ namespace FitnessTracker.Controllers
             var goal = await _context.Goals.FindAsync(id);
             _context.Goals.Remove(goal);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Settings", "Home");
         }
 
         private bool GoalExists(int id)

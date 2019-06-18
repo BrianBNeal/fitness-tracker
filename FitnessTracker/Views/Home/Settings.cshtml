@@ -190,14 +190,15 @@
                             <td>
                                 @Html.DisplayFor(g => goal.Target)
                             </td>
-                            @{
-                                if (goal == Model.CurrentGoal)
-                                {
-                                    <td>
-                                        <a asp-controller="Goals" asp-action="Edit" asp-route-id="@goal.GoalId">Edit</a> | <a asp-controller="Goals" asp-action="Delete" asp-route-id="@goal.GoalId">Delete</a>
-                                    </td>
+                            <td>
+                                @{
+                                    if (goal == Model.CurrentGoal)
+                                    {
+                                        <a asp-controller="Goals" asp-action="Edit" asp-route-id="@goal.GoalId">Edit</a><span> | </span>
+                                    }
                                 }
-                            }
+                                <a asp-controller="Goals" asp-action="Delete" asp-route-id="@goal.GoalId">Delete</a>
+                            </td>
 
                         </tr>
                     }

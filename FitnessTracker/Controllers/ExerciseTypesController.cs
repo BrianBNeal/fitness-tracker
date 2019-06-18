@@ -27,31 +27,31 @@ namespace FitnessTracker.Controllers
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        // GET: ExerciseTypes
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.ExerciseTypes.Include(e => e.User);
-            return View(await applicationDbContext.ToListAsync());
-        }
+        //// GET: ExerciseTypes
+        //public async Task<IActionResult> Index()
+        //{
+        //    var applicationDbContext = _context.ExerciseTypes.Include(e => e.User);
+        //    return View(await applicationDbContext.ToListAsync());
+        //}
 
-        // GET: ExerciseTypes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: ExerciseTypes/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var exerciseType = await _context.ExerciseTypes
-                .Include(e => e.User)
-                .FirstOrDefaultAsync(m => m.ExerciseTypeId == id);
-            if (exerciseType == null)
-            {
-                return NotFound();
-            }
+        //    var exerciseType = await _context.ExerciseTypes
+        //        .Include(e => e.User)
+        //        .FirstOrDefaultAsync(m => m.ExerciseTypeId == id);
+        //    if (exerciseType == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(exerciseType);
-        }
+        //    return View(exerciseType);
+        //}
 
         // GET: ExerciseTypes/Create
         public IActionResult Create()
