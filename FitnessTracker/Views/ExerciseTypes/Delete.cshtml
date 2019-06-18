@@ -4,12 +4,13 @@
     ViewData["Title"] = "Delete";
 }
 
+
 <h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
-<h3>THIS ACTION WILL PERMANENTLY DELETE ALL ENTRIES THAT USE THIS ACTIVITY!</h3>
+<p class="text-danger" style="font-weight: bold">Are you sure you want to delete this?<br />
+Deleting this will also delete all entries in your history that use this activity.<br />
+This cannot be undone!</p>
 <div>
-    <h4>ExerciseType</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -20,9 +21,9 @@
         </dd>
     </dl>
 
-    <form asp-action="Confirm">
+    <form asp-action="Delete">
         <input type="hidden" asp-for="ExerciseTypeId" />
-        <input type="submit" value="Delete" class="btn btn-danger" asp-route-id="@Model.ExerciseTypeId"/> |
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-controller="Home" asp-action="Settings">Back</a>
     </form>
 </div>

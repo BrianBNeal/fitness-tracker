@@ -82,17 +82,25 @@ namespace FitnessTracker.Controllers
         public async Task<IActionResult> Settings()
         {
             var user = await GetCurrentUserAsync();
-            var goals = _context.Goals.Where(g => g.User == user).ToList();
-            var exercises = _context.Exercises.Where(e => e.User == user).ToList();
-            var exerciseTypes = _context.ExerciseTypes.Where(et => et.User == user).ToList();
-            var locations = _context.Locations.Where(l => l.User == user).ToList();
+            var goals = await _context.Goals.Where(g => g.User == user).OrderByDescending(g => g.StartDate).ToListAsync();
+            var exercises = await _context.Exercises.Where(e => e.User == user).ToListAsync();
+            var exerciseTypes = await _context.ExerciseTypes.Where(et => et.User == user).ToListAsync();
+            var locations = await _context.Locations.Where(l => l.User == user).ToListAsync();
 
             user.Goals = goals;
             user.Exercises = exercises;
             user.ExerciseTypes = exerciseTypes;
             user.Locations = locations;
 
-            return View(user);
+            Goal currentGoal = goals.Where(g => g.EndDate >= DateTime.Today).FirstOrDefault();
+
+            SettingsViewModel model = new SettingsViewModel
+            {
+                User = user,
+                CurrentGoal = currentGoal
+            };
+
+            return View(model);
         }
     }
 }

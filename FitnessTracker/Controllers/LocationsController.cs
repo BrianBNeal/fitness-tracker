@@ -11,30 +11,28 @@ using Microsoft.AspNetCore.Identity;
 
 namespace FitnessTracker.Controllers
 {
-    public class ExerciseTypesController : Controller
+    public class LocationsController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
 
-
-        public ExerciseTypesController(ApplicationDbContext context,
-                                               UserManager<ApplicationUser> userManager)
+        public LocationsController(ApplicationDbContext context,
+                                   UserManager<ApplicationUser> userManager)
         {
-            _context = context;
             _userManager = userManager;
-
+            _context = context;
         }
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        // GET: ExerciseTypes
+        // GET: Locations
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.ExerciseTypes.Include(e => e.User);
+            var applicationDbContext = _context.Locations.Include(l => l.User);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: ExerciseTypes/Details/5
+        // GET: Locations/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,44 +40,43 @@ namespace FitnessTracker.Controllers
                 return NotFound();
             }
 
-            var exerciseType = await _context.ExerciseTypes
-                .Include(e => e.User)
-                .FirstOrDefaultAsync(m => m.ExerciseTypeId == id);
-            if (exerciseType == null)
+            var location = await _context.Locations
+                .Include(l => l.User)
+                .FirstOrDefaultAsync(m => m.LocationId == id);
+            if (location == null)
             {
                 return NotFound();
             }
 
-            return View(exerciseType);
+            return View(location);
         }
 
-        // GET: ExerciseTypes/Create
+        // GET: Locations/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ExerciseTypes/Create
+        // POST: Locations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ExerciseTypeId,Type,UserId")] ExerciseType exerciseType)
+        public async Task<IActionResult> Create([Bind("LocationId,Name")] Location location)
         {
             ModelState.Remove("UserId");
             if (ModelState.IsValid)
             {
                 var user = await GetCurrentUserAsync();
-                exerciseType.UserId = user.Id;
-                _context.Add(exerciseType);
+                location.UserId = user.Id;
+                _context.Add(location);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Settings","Home");
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", exerciseType.UserId);
-            return View(exerciseType);
+            return View(location);
         }
 
-        // GET: ExerciseTypes/Edit/5
+        // GET: Locations/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -87,22 +84,22 @@ namespace FitnessTracker.Controllers
                 return NotFound();
             }
 
-            var exerciseType = await _context.ExerciseTypes.FindAsync(id);
-            if (exerciseType == null)
+            var location = await _context.Locations.FindAsync(id);
+            if (location == null)
             {
                 return NotFound();
             }
-            return View(exerciseType);
+            return View(location);
         }
 
-        // POST: ExerciseTypes/Edit/5
+        // POST: Locations/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ExerciseTypeId,Type,UserId")] ExerciseType exerciseType)
+        public async Task<IActionResult> Edit(int id, [Bind("LocationId,Name,UserId")] Location location)
         {
-            if (id != exerciseType.ExerciseTypeId)
+            if (id != location.LocationId)
             {
                 return NotFound();
             }
@@ -111,12 +108,12 @@ namespace FitnessTracker.Controllers
             {
                 try
                 {
-                    _context.Update(exerciseType);
+                    _context.Update(location);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ExerciseTypeExists(exerciseType.ExerciseTypeId))
+                    if (!LocationExists(location.LocationId))
                     {
                         return NotFound();
                     }
@@ -125,12 +122,12 @@ namespace FitnessTracker.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("Settings","Home");
+                return RedirectToAction("Settings", "Home");
             }
-            return View(exerciseType);
+            return View(location);
         }
 
-        // GET: ExerciseTypes/Delete/5
+        // GET: Locations/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,31 +135,31 @@ namespace FitnessTracker.Controllers
                 return NotFound();
             }
 
-            var exerciseType = await _context.ExerciseTypes
-                .Include(e => e.User)
-                .FirstOrDefaultAsync(m => m.ExerciseTypeId == id);
-            if (exerciseType == null)
+            var location = await _context.Locations
+                .Include(l => l.User)
+                .FirstOrDefaultAsync(m => m.LocationId == id);
+            if (location == null)
             {
                 return NotFound();
             }
 
-            return View(exerciseType);
+            return View(location);
         }
 
-        // POST: ExerciseTypes/Delete/5
+        // POST: Locations/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var exerciseType = await _context.ExerciseTypes.FindAsync(id);
-            _context.ExerciseTypes.Remove(exerciseType);
+            var location = await _context.Locations.FindAsync(id);
+            _context.Locations.Remove(location);
             await _context.SaveChangesAsync();
             return RedirectToAction("Settings", "Home");
         }
 
-        private bool ExerciseTypeExists(int id)
+        private bool LocationExists(int id)
         {
-            return _context.ExerciseTypes.Any(e => e.ExerciseTypeId == id);
+            return _context.Locations.Any(e => e.LocationId == id);
         }
     }
 }

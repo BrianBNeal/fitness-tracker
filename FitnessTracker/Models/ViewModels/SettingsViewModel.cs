@@ -9,5 +9,6 @@ namespace FitnessTracker.Models.ViewModels
     {
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
+        public Goal CurrentGoal { get; set; }
     }
 }
