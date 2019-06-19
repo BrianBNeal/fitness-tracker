@@ -31,6 +31,8 @@ namespace FitnessTracker.Models
         [Required]
         public int Target { get; set; } //user's target for amount of time spent on goal
 
+        public List<Exercise> Exercises { get; set; } //exercises that count toward this goal
+
 
         public bool IsDone()
         {

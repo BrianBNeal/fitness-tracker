@@ -31,35 +31,27 @@ namespace FitnessTracker.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await GetCurrentUserAsync();
-
             var userExercises = _context.Exercises.Where(e => e.User == user);
-
             //exercises by this user during current week
             var thisWeeksExercises = userExercises.Where(e => e.IsThisWeeksActivity());
-
             //total minutes of this week's activity
             int currentWeeklyTotal = 0;
             if (thisWeeksExercises != null)
             {
                 currentWeeklyTotal = thisWeeksExercises.Select(e => e.Duration).Sum();
             }
-
             //current Goal for this user
             var goal = _context.Goals.OrderByDescending(g => g.StartDate).Where(g => g.User == user && g.EndDate >= DateTime.Today).FirstOrDefault();
-
-            //exercise progress toward current Goal
-            int progress = 0;
-            if (goal != null)
-            {
-                progress = _context.Exercises.Where(e => e.User == user && e.DateLogged >= goal.StartDate).Select(e => e.Duration).Sum();
-            }
+            //exercises during current Goal
+            List<Exercise> goalExercises = await _context.Exercises.Where(e => e.UserId == user.Id && e.DateLogged >= goal.StartDate).ToListAsync();
+            goal.Exercises = goalExercises;
 
             HomeViewModel model = new HomeViewModel
             {
                 User = user,
                 Goal = goal,
                 CurrentWeeklyTotal = currentWeeklyTotal,
-                GoalProgressMinutes = progress
+                GoalProgressMinutes = goal.Exercises.Sum(e => e.Duration)
             };
 
             model.User.Exercises = userExercises.ToList();
