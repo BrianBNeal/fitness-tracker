@@ -23,7 +23,7 @@ namespace FitnessTracker.Models
 
         [Required]
         [DataType(DataType.Date),
-            Display(Name ="End Date"),
+            Display(Name = "End Date"),
             DisplayFormat(DataFormatString = "{0:M/d/yyyy}")]
         [ValidateDateRange]
         public DateTime EndDate { get; set; }
@@ -31,5 +31,24 @@ namespace FitnessTracker.Models
         [Required]
         public int Target { get; set; } //user's target for amount of time spent on goal
 
+
+        public bool IsDone()
+        {
+            if (EndDate.Date < DateTime.Now.Date)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool WasASuccess(List<Exercise> exercises)
+        {
+            int progress = exercises.Select(e => e.Duration).Sum();
+            if (progress >= Target)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
