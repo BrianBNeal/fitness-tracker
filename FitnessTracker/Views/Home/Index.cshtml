@@ -12,7 +12,7 @@
 
     @{
 
-        //MESSAGE AND BUTTON ONLY IF THERE IS NO CURRENT GOAL
+    //GOAL SECTION
 
         if (Model.Goal == null)
         {
@@ -29,8 +29,7 @@
                 </div>
             </div>
         }
-
-        //CURRENT GOAL
+        
         else
         {
             <div class="container">
@@ -56,7 +55,7 @@
     <hr />
 
     @* WEEKLY ACTIVITY *@
-
+    
     <div>
         <h3>
             You have been active for @Model.CurrentWeeklyTotal minutes this week

@@ -10,7 +10,7 @@ namespace FitnessTracker.Modules
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            DateTime now = DateTime.Now;
+            DateTime now = DateTime.UtcNow;
             DateTime expiration = (DateTime)value;
 
             // your validation logic

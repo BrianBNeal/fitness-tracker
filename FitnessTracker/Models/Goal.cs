@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,12 +32,10 @@ namespace FitnessTracker.Models
         [Required]
         public int Target { get; set; } //user's target for amount of time spent on goal
 
-        public List<Exercise> Exercises { get; set; } //exercises that count toward this goal
-
 
         public bool IsDone()
         {
-            if (EndDate.Date < DateTime.Now.Date)
+            if (EndDate.Date < DateTime.UtcNow.Date)
             {
                 return true;
             }

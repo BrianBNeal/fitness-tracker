@@ -125,13 +125,13 @@ namespace FitnessTracker.Data.Migrations
                         column: x => x.ExerciseTypeId,
                         principalTable: "ExerciseTypes",
                         principalColumn: "ExerciseTypeId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Exercises_Locations_LocationId",
                         column: x => x.LocationId,
                         principalTable: "Locations",
                         principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Exercises_AspNetUsers_UserId1",
                         column: x => x.UserId1,

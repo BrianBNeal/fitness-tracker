@@ -41,18 +41,23 @@ namespace FitnessTracker.Controllers
                 currentWeeklyTotal = thisWeeksExercises.Select(e => e.Duration).Sum();
             }
             //current Goal for this user
-            var goal = _context.Goals.OrderByDescending(g => g.StartDate).Where(g => g.User == user && g.EndDate >= DateTime.Today).FirstOrDefault();
-            //exercises during current Goal
-            List<Exercise> goalExercises = await _context.Exercises.Where(e => e.UserId == user.Id && e.DateLogged >= goal.StartDate).ToListAsync();
-            goal.Exercises = goalExercises;
+            var allGoals = _context.Goals;
+            var usersGoals = allGoals.Where(g => g.UserId == user.Id);
+            var currentGoal = usersGoals.Where(g => g.EndDate >= DateTime.UtcNow).FirstOrDefault();
 
             HomeViewModel model = new HomeViewModel
             {
                 User = user,
-                Goal = goal,
+                Goal = currentGoal,
                 CurrentWeeklyTotal = currentWeeklyTotal,
-                GoalProgressMinutes = goal.Exercises.Sum(e => e.Duration)
+                Exercises = null
             };
+
+            //exercises during current Goal
+            if (currentGoal!=null)
+            {
+                model.Exercises = _context.Exercises.Where(e => e.UserId == user.Id && e.DateLogged >= currentGoal.StartDate).ToList();
+            }
 
             model.User.Exercises = userExercises.ToList();
 
@@ -84,7 +89,7 @@ namespace FitnessTracker.Controllers
             user.ExerciseTypes = exerciseTypes;
             user.Locations = locations;
 
-            Goal currentGoal = goals.Where(g => g.EndDate >= DateTime.Today).FirstOrDefault();
+            Goal currentGoal = goals.Where(g => g.EndDate >= DateTime.UtcNow).FirstOrDefault();
 
             SettingsViewModel model = new SettingsViewModel
             {
