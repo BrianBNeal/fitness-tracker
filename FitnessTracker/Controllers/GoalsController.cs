@@ -75,7 +75,6 @@ namespace FitnessTracker.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", goal.UserId);
             return View(goal);
         }
 
@@ -92,7 +91,6 @@ namespace FitnessTracker.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", goal.UserId);
             return View(goal);
         }
 
@@ -128,7 +126,6 @@ namespace FitnessTracker.Controllers
                 }
                 return RedirectToAction("Settings", "Home");
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", goal.UserId);
             return View(goal);
         }
 

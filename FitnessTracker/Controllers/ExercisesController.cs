@@ -72,8 +72,8 @@ namespace FitnessTracker.Controllers
         {
             var user = await GetCurrentUserAsync();
 
-            ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels, "ExertionLevelId", "SelectListDescription");
-            ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels, "EnjoymentLevelId", "SelectListDescription");
+            ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels.OrderByDescending(l => l.SelectListDescription), "ExertionLevelId", "SelectListDescription");
+            ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels.OrderByDescending(l => l.SelectListDescription), "EnjoymentLevelId", "SelectListDescription");
             ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes.Where(e => e.UserId == user.Id), "ExerciseTypeId", "Type");
             ViewData["LocationId"] = new SelectList(_context.Locations.Where(e => e.UserId == user.Id), "LocationId", "Name");
             return View();

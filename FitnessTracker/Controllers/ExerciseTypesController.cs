@@ -155,6 +155,13 @@ namespace FitnessTracker.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var exerciseType = await _context.ExerciseTypes.FindAsync(id);
+            var exercises = await _context.Exercises.Where(e => e.ExerciseTypeId == id).ToListAsync();
+
+            foreach (var item in exercises)
+            {
+                _context.Exercises.Remove(item);
+            }
+
             _context.ExerciseTypes.Remove(exerciseType);
             await _context.SaveChangesAsync();
             return RedirectToAction("Settings", "Home");
