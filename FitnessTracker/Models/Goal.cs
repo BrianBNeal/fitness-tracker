@@ -29,8 +29,8 @@ namespace FitnessTracker.Models
         [ValidateDateRange]
         public DateTime EndDate { get; set; }
 
-        [Required]
-        [Range(1, 10000, ErrorMessage = "This value must be between 1 and 10,000")]
+        [Required(ErrorMessage = "This field is required")]
+        [Range(1, 10000, ErrorMessage = "Please enter a value from 1 to 10,000")]
         public int Target { get; set; } //user's target for amount of time spent on goal
 
 

@@ -42,7 +42,7 @@ namespace FitnessTracker.Controllers
             }
             //current Goal for this user
             var allGoals = _context.Goals;
-            var usersGoals = allGoals.Where(g => g.UserId == user.Id);
+            var usersGoals = allGoals.Where(g => g.UserId == user.Id).OrderByDescending(g => g.StartDate);
             var currentGoal = usersGoals.Where(g => g.EndDate >= DateTime.Now).FirstOrDefault();
 
             HomeViewModel model = new HomeViewModel

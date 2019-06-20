@@ -73,9 +73,8 @@ namespace FitnessTracker.Controllers
                 exerciseType.UserId = user.Id;
                 _context.Add(exerciseType);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Settings","Home");
             }
-            ViewData["UserId"] = new SelectList(_context.ApplicationUsers, "Id", "Id", exerciseType.UserId);
             return View(exerciseType);
         }
 

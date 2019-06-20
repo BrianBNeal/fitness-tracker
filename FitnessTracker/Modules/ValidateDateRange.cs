@@ -20,7 +20,7 @@ namespace FitnessTracker.Modules
             }
             else
             {
-                return new ValidationResult("The end date cannot be before today.");
+                return new ValidationResult("The end date must be after the date you started the goal.");
             }
         }
     }
