@@ -9,9 +9,9 @@ namespace FitnessTracker.Models.ViewModels
     public class HomeViewModel
     {
         public ApplicationUser User { get; set; }
-        public Goal Goal { get; set; }
 
-        public List<Exercise> Exercises { get; set; }
+        public Goal Goal { get; set; } //current Goal
+        public List<Exercise> Exercises { get; set; } //exercises during current Goal
 
         [Display(Name = "Progress")]
         public int? GoalProgressMinutes => Exercises.Sum(e => e.Duration);
@@ -48,6 +48,8 @@ namespace FitnessTracker.Models.ViewModels
         //total minutes for current week
         [Display(Name = "Recent Activity")]
         public int CurrentWeeklyTotal { get; set; }
+
+        public List<Exercise> RecentExercises { get; set; } // 3 most recent exercises
 
 
 

@@ -92,7 +92,7 @@ namespace FitnessTracker.Controllers
             if (ModelState.IsValid)
             {
                 exercise.UserId = user.Id;
-                exercise.DateLogged = DateTime.UtcNow;
+                exercise.DateLogged = DateTime.Now;
                 _context.Add(exercise);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
@@ -130,7 +130,7 @@ namespace FitnessTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentLevelId,ExertionLevelId,Comments")] Exercise exercise)
+        public async Task<IActionResult> Edit(int id, [Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentLevelId,ExertionLevelId,Comments, DateLogged")] Exercise exercise)
         {
             if (id != exercise.ExerciseId)
             {

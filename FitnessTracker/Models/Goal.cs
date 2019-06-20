@@ -35,7 +35,7 @@ namespace FitnessTracker.Models
 
         public bool IsDone()
         {
-            if (EndDate.Date < DateTime.UtcNow.Date)
+            if (EndDate.Date < DateTime.Now.Date)
             {
                 return true;
             }
