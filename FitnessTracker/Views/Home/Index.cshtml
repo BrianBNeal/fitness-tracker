@@ -14,8 +14,9 @@
 
         //GOAL SECTION
 
-        if (Model.Goal == null)
+        if (Model.MostRecentGoal == null)
         {
+            //if no goals in history
             <div class="container">
                 <div class="row">
                     <div class="col">
@@ -29,15 +30,14 @@
                 </div>
             </div>
         }
-
         else
         {
             <div class="container">
                 <div class="row">
-                    @*Current Goal*@
+                    @*Most Recent Goal*@
                     <div class="col-sm-3">
                         <h4>Current Goal</h4>
-                        <h6>@Model.Goal.Target minutes from<br />@Html.DisplayFor(m => Model.Goal.StartDate) to @Html.DisplayFor(m => Model.Goal.EndDate)</h6>
+                        <h6>@Model.MostRecentGoal.Target minutes from<br />@Html.DisplayFor(m => Model.MostRecentGoal.StartDate) to @Html.DisplayFor(m => Model.MostRecentGoal.EndDate)</h6>
                     </div>
                     @*Progress bar*@
                     <div class="col-sm-6">
@@ -45,11 +45,42 @@
                         <div class="progress" style="height: 35px">
                             <div class="progress-bar @Model.ProgressColor" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="@Model.GoalProgressPercentage" style="@($"width: {Model.GoalProgressPercentage}%")"></div>
                         </div>
+                        @* Goal Success? *@
+                        @{
+                            if (Model.MostRecentGoal.IsDone(Model.GoalExercises))
+                            {
+                                <div class="container">
+                                    @{
+                                        if (Model.MostRecentGoal.TargetWasMet(Model.GoalExercises))
+                                        {
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h5>Congratulations, you finished your goal!</h5>
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h5>You didn't quite finish your goal. Try again!</h5>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                    <div class="row">
+                                        <div class="col">
+                                            <a class="btn btn-success" asp-controller="Goals" asp-action="Create">Set New Goal</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
                     </div>
                     @*Progress Summary*@
                     <div class="col-sm-3">
                         <h4>@Model.GoalProgressPercentage% Complete</h4>
-                        <h5>@Model.GoalProgressMinutes of @Model.Goal.Target mins</h5>
+                        <h5>@Model.GoalProgressMinutes of @Model.MostRecentGoal.Target mins</h5>
                     </div>
                 </div>
             </div>

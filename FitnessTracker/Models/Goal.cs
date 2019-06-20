@@ -34,16 +34,18 @@ namespace FitnessTracker.Models
         public int Target { get; set; } //user's target for amount of time spent on goal
 
 
-        public bool IsDone()
+        //parameter 'exercises' is collection of exercises that apply to this goal's target
+        public bool IsDone(IEnumerable<Exercise> exercises)
         {
-            if (EndDate.Date < DateTime.Now.Date)
+            if (EndDate.Date < DateTime.Now || this.TargetWasMet(exercises))
             {
                 return true;
             }
             return false;
         }
 
-        public bool WasASuccess(List<Exercise> exercises)
+        //parameter 'exercises' is collection of exercises that apply to this goal's target
+        public bool TargetWasMet(IEnumerable<Exercise> exercises)
         {
             int progress = exercises.Select(e => e.Duration).Sum();
             if (progress >= Target)

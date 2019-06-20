@@ -9,6 +9,7 @@ namespace FitnessTracker.Models.ViewModels
     {
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
-        public Goal CurrentGoal { get; set; }
+        public Goal MostRecentGoal { get; set; }
+        public List<Exercise> GoalExercises { get; set; } //exercises that apply to MostRecentGoal
     }
 }
