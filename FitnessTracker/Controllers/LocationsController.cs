@@ -25,31 +25,31 @@ namespace FitnessTracker.Controllers
 
         private Task<ApplicationUser> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
 
-        // GET: Locations
-        public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Locations.Include(l => l.User);
-            return View(await applicationDbContext.ToListAsync());
-        }
+        //// GET: Locations
+        //public async Task<IActionResult> Index()
+        //{
+        //    var applicationDbContext = _context.Locations.Include(l => l.User);
+        //    return View(await applicationDbContext.ToListAsync());
+        //}
 
-        // GET: Locations/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //// GET: Locations/Details/5
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var location = await _context.Locations
-                .Include(l => l.User)
-                .FirstOrDefaultAsync(m => m.LocationId == id);
-            if (location == null)
-            {
-                return NotFound();
-            }
+        //    var location = await _context.Locations
+        //        .Include(l => l.User)
+        //        .FirstOrDefaultAsync(m => m.LocationId == id);
+        //    if (location == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(location);
-        }
+        //    return View(location);
+        //}
 
         // GET: Locations/Create
         public IActionResult Create()
@@ -152,6 +152,13 @@ namespace FitnessTracker.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var location = await _context.Locations.FindAsync(id);
+            var exercises = await _context.Exercises.Where(e => e.LocationId == id).ToListAsync();
+
+            foreach (var item in exercises)
+            {
+                _context.Exercises.Remove(item);
+            }
+
             _context.Locations.Remove(location);
             await _context.SaveChangesAsync();
             return RedirectToAction("Settings", "Home");

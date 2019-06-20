@@ -10,64 +10,73 @@
     <a class="btn btn-primary" asp-action="Create">Log New Activity</a>
 </p>
 <br />
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.DateLogged)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExerciseType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Duration)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Location)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EnjoymentLevelId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ExertionLevelId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Comments)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            if (item.Comments == null)
-            { item.Comments = "(none)"; }
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateLogged)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExerciseType.Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Duration) mins
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Location.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EnjoymentLevel.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ExertionLevel.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Comments)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@item.ExerciseId">Details</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+@{ if (Model.ToList().Count == 0)
+    {
+        <h3>You don't have any activities logged yet.</h3>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateLogged)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ExerciseType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Duration)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Location)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EnjoymentLevelId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ExertionLevelId)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Comments)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    if (item.Comments == null)
+                    { item.Comments = "(none)"; }
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateLogged)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExerciseType.Type)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Duration) mins
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Location.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EnjoymentLevel.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ExertionLevel.Description)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Comments)
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.ExerciseId">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}

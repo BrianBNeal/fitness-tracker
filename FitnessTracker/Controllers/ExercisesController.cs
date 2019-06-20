@@ -36,7 +36,7 @@ namespace FitnessTracker.Controllers
                 .Include(e => e.Location)
                 .Include(e => e.ExertionLevel)
                 .Include(e => e.EnjoymentLevel)
-                .Where(e => e.User == user)
+                .Where(e => e.UserId == user.Id)
                 .OrderByDescending(e => e.DateLogged);
 
             return View(await exercises.ToListAsync());
@@ -50,11 +50,14 @@ namespace FitnessTracker.Controllers
                 return NotFound();
             }
 
+            var user = await GetCurrentUserAsync();
+
             var exercise = await _context.Exercises
                 .Include(e => e.ExerciseType)
                 .Include(e => e.Location)
                 .Include(e => e.ExertionLevel)
                 .Include(e => e.EnjoymentLevel)
+                .Where(e => e.UserId == user.Id && e.ExerciseId == id)
                 .FirstOrDefaultAsync(m => m.ExerciseId == id);
             if (exercise == null)
             {
@@ -65,12 +68,14 @@ namespace FitnessTracker.Controllers
         }
 
         // GET: Exercises/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels, "ExertionLevelId", "SelectListDescription");
-            ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels, "EnjoymentLevelId", "SelectListDescription");
-            ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes, "ExerciseTypeId", "Type");
-            ViewData["LocationId"] = new SelectList(_context.Locations, "LocationId", "Name");
+            var user = await GetCurrentUserAsync();
+
+            ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels.OrderByDescending(l => l.SelectListDescription), "ExertionLevelId", "SelectListDescription");
+            ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels.OrderByDescending(l => l.SelectListDescription), "EnjoymentLevelId", "SelectListDescription");
+            ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes.Where(e => e.UserId == user.Id), "ExerciseTypeId", "Type");
+            ViewData["LocationId"] = new SelectList(_context.Locations.Where(e => e.UserId == user.Id), "LocationId", "Name");
             return View();
         }
 
@@ -83,19 +88,19 @@ namespace FitnessTracker.Controllers
         {
             ModelState.Remove("UserId");
             ModelState.Remove("DateLogged");
+            var user = await GetCurrentUserAsync();
             if (ModelState.IsValid)
             {
-                var user = await GetCurrentUserAsync();
                 exercise.UserId = user.Id;
-                exercise.DateLogged = DateTime.UtcNow;
+                exercise.DateLogged = DateTime.Now;
                 _context.Add(exercise);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             }
             ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels, "ExertionLevelId", "SelectListDescription", exercise.ExertionLevelId);
             ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels, "EnjoymentLevelId", "SelectListDescription", exercise.EnjoymentLevelId);
-            ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes, "ExerciseTypeId", "Type", exercise.ExerciseTypeId);
-            ViewData["LocationId"] = new SelectList(_context.Locations, "LocationId", "Name", exercise.LocationId);
+            ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes.Where(e => e.UserId == user.Id), "ExerciseTypeId", "Type", exercise.ExerciseTypeId);
+            ViewData["LocationId"] = new SelectList(_context.Locations.Where(e => e.UserId == user.Id), "LocationId", "Name", exercise.LocationId);
             return View(exercise);
         }
 
@@ -112,10 +117,11 @@ namespace FitnessTracker.Controllers
             {
                 return NotFound();
             }
+            var user = await GetCurrentUserAsync();
             ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels, "ExertionLevelId", "SelectListDescription");
             ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels, "EnjoymentLevelId", "SelectListDescription");
-            ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes, "ExerciseTypeId", "Type", exercise.ExerciseTypeId);
-            ViewData["LocationId"] = new SelectList(_context.Locations, "LocationId", "Name", exercise.LocationId);
+            ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes.Where(e => e.UserId == user.Id), "ExerciseTypeId", "Type", exercise.ExerciseTypeId);
+            ViewData["LocationId"] = new SelectList(_context.Locations.Where(e => e.UserId == user.Id), "LocationId", "Name", exercise.LocationId);
             return View(exercise);
         }
 
@@ -124,7 +130,7 @@ namespace FitnessTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentLevelId,ExertionLevelId,Comments")] Exercise exercise)
+        public async Task<IActionResult> Edit(int id, [Bind("ExerciseId,UserId,LocationId,ExerciseTypeId,Duration,EnjoymentLevelId,ExertionLevelId,Comments, DateLogged")] Exercise exercise)
         {
             if (id != exercise.ExerciseId)
             {
@@ -151,10 +157,11 @@ namespace FitnessTracker.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            var user = await GetCurrentUserAsync();
             ViewData["ExertionLevelId"] = new SelectList(_context.ExertionLevels, "ExertionLevelId", "SelectListDescription", exercise.ExertionLevelId);
             ViewData["EnjoymentLevelId"] = new SelectList(_context.EnjoymentLevels, "EnjoymentLevelId", "SelectListDescription", exercise.EnjoymentLevelId);
-            ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes, "ExerciseTypeId", "Type", exercise.ExerciseTypeId);
-            ViewData["LocationId"] = new SelectList(_context.Locations, "LocationId", "Name", exercise.LocationId);
+            ViewData["ExerciseTypeId"] = new SelectList(_context.ExerciseTypes.Where(e => e.UserId == user.Id), "ExerciseTypeId", "Type", exercise.ExerciseTypeId);
+            ViewData["LocationId"] = new SelectList(_context.Locations.Where(e => e.UserId == user.Id), "LocationId", "Name", exercise.LocationId);
             return View(exercise);
         }
 

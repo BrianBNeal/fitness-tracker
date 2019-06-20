@@ -32,6 +32,7 @@ namespace FitnessTracker.Models
         public ExerciseType ExerciseType { get; set; }
 
         [Required]
+        [Range(1, 600)]
         public int Duration { get; set; }
 
         [Required]
@@ -49,7 +50,7 @@ namespace FitnessTracker.Models
         [Required]
         [Display(Name = "Date"),
             DataType(DataType.Date)]
-        public DateTime DateLogged { get; set; } = DateTime.UtcNow;
+        public DateTime DateLogged { get; set; }
 
         public string Comments { get; set; }
 
@@ -64,7 +65,7 @@ namespace FitnessTracker.Models
             DayOfWeek myFirstDOW = myCI.DateTimeFormat.FirstDayOfWeek;
 
             //check to see if the DateLogged property is in the same calendar week as today
-            if (myCal.GetWeekOfYear(DateLogged, myCWR, myFirstDOW) == myCal.GetWeekOfYear(DateTime.UtcNow, myCWR, myFirstDOW))
+            if (myCal.GetWeekOfYear(DateLogged, myCWR, myFirstDOW) == myCal.GetWeekOfYear(DateTime.Now, myCWR, myFirstDOW))
             {
                 return true;
             }
