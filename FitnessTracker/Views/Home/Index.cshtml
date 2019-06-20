@@ -4,134 +4,160 @@
     ViewData["Title"] = "Home Page";
 }
 
-    <div class="text-center">
+<div class="text-center">
 
-        <h1 class="display-4">Fitness Tracker</h1>
+    <h1 class="display-4">Fitness Tracker</h1>
 
-        <hr />
+    <hr />
 
-        @{
+    @{
 
-            //GOAL SECTION
+        //GOAL SECTION
 
-            if (Model.Goal == null)
-            {
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <h5>You currently have no goal set. Would you like to make one?</h5>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <a class="btn btn-success" asp-controller="Goals" asp-action="Create">Set a Goal</a>
-                        </div>
+        if (Model.Goal == null)
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <h5>You currently have no goal set. Would you like to make one?</h5>
                     </div>
                 </div>
-            }
-
-            else
-            {
-                <div class="container">
-                    <div class="row">
-                        @*Current Goal*@
-                        <div class="col-sm-3">
-                            <h4>Current Goal</h4>
-                            <h6>@Model.Goal.Target minutes from<br />@Html.DisplayFor(m => Model.Goal.EndDate) to @Html.DisplayFor(m => Model.Goal.StartDate)</h6>
-                        </div>
-                        @*Progress bar*@
-                        <div class="col-sm-6">
-                            <br />
-                            <div class="progress" style="height: 35px">
-                                <div class="progress-bar @Model.ProgressColor" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="@Model.GoalProgressPercentage" style="@($"width: {Model.GoalProgressPercentage}%")"></div>
-                            </div>
-                        </div>
-                        @*Progress Summary*@
-                        <div class="col-sm-3">
-                            <h4>@Model.GoalProgressPercentage% Complete</h4>
-                            <h5>@Model.GoalProgressMinutes of @Model.Goal.Target mins</h5>
-                        </div>
+                <div class="row">
+                    <div class="col">
+                        <a class="btn btn-success" asp-controller="Goals" asp-action="Create">Set a Goal</a>
                     </div>
                 </div>
-            }
+            </div>
         }
 
-        <br /><br />
+        else
+        {
+            <div class="container">
+                <div class="row">
+                    @*Current Goal*@
+                    <div class="col-sm-3">
+                        <h4>Current Goal</h4>
+                        <h6>@Model.Goal.Target minutes from<br />@Html.DisplayFor(m => Model.Goal.StartDate) to @Html.DisplayFor(m => Model.Goal.EndDate)</h6>
+                    </div>
+                    @*Progress bar*@
+                    <div class="col-sm-6">
+                        <br />
+                        <div class="progress" style="height: 35px">
+                            <div class="progress-bar @Model.ProgressColor" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="@Model.GoalProgressPercentage" style="@($"width: {Model.GoalProgressPercentage}%")"></div>
+                        </div>
+                    </div>
+                    @*Progress Summary*@
+                    <div class="col-sm-3">
+                        <h4>@Model.GoalProgressPercentage% Complete</h4>
+                        <h5>@Model.GoalProgressMinutes of @Model.Goal.Target mins</h5>
+                    </div>
+                </div>
+            </div>
+        }
+    }
 
-        @* WEEKLY TOTAL *@
+    <br /><br />
 
-        <div>
-            <h3>
-                You have been active for @Model.CurrentWeeklyTotal minutes this week
-            </h3>
-        </div>
-        <div class="text-center">
-            <a class="btn btn-primary" asp-controller="Exercises" asp-action="Create">Log New Activity</a>
-        </div>
+    @* WEEKLY TOTAL *@
 
-        <br /><br />
-        @* MOST RECENT ACTIVITY *@
+    <div>
+        @{
+            if (Model.CurrentWeeklyTotal == 0)
+            {
+                <h3>You haven't logged any activity yet this week.</h3>
+            }
+            else
+            {
 
-        <div>
-            <h3>
-                Most Recent Activity
-            </h3>
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Date
-                    </th>
-                    <th>
-                        Activity
-                    </th>
-                    <th>
-                        Duration
-                    </th>
-                    <th>
-                        Location
-                    </th>
-                    <th>
-                        Enjoyment Level
-                    </th>
-                    <th>
-                        Exertion Level
-                    </th>
-                    <th>
-                        Comments
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.RecentExercises)
-                {
-                    if (item.Comments == null)
-                    { item.Comments = "(none)"; }
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DateLogged)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ExerciseType.Type)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Duration) mins
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Location.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EnjoymentLevel.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ExertionLevel.Description)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Comments)
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+
+                <h3>
+                    You have been active for @Model.CurrentWeeklyTotal minutes this week
+                </h3>
+            }
+        }
     </div>
+    <div class="text-center">
+        <a class="btn btn-primary" asp-controller="Exercises" asp-action="Create">Log New Activity</a>
+    </div>
+
+    <br /><br />
+    @* MOST RECENT ACTIVITY *@
+
+    <div>
+        <h3>
+            Most Recent Activity
+        </h3>
+    </div>
+    @{
+        if (Model.RecentExercises.Count == 0)
+        {
+            <hr />
+            <h4>You don't have any activities logged yet.</h4>
+        }
+        else
+        {
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Activity
+                        </th>
+                        <th>
+                            Duration
+                        </th>
+                        <th>
+                            Location
+                        </th>
+                        <th>
+                            Enjoyment Level
+                        </th>
+                        <th>
+                            Exertion Level
+                        </th>
+                        <th>
+                            Comments
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.RecentExercises)
+                    {
+                        if (item.Comments == null)
+                        { item.Comments = "(none)"; }
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DateLogged)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ExerciseType.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Duration) mins
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Location.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EnjoymentLevel.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ExertionLevel.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Comments)
+                            </td>
+                            <td>
+                                <a asp-controller="Exercises" asp-action="Details" asp-route-id="@item.ExerciseId">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    }
+</div>

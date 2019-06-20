@@ -32,7 +32,7 @@ namespace FitnessTracker.Models
         public ExerciseType ExerciseType { get; set; }
 
         [Required]
-        [Range(0, 600)]
+        [Range(1, 600)]
         public int Duration { get; set; }
 
         [Required]
