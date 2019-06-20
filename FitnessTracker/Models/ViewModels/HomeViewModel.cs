@@ -10,13 +10,13 @@ namespace FitnessTracker.Models.ViewModels
     {
         public ApplicationUser User { get; set; }
 
-        public Goal Goal { get; set; } //current Goal
-        public List<Exercise> Exercises { get; set; } //exercises during current Goal
+        public Goal MostRecentGoal { get; set; }
+        public List<Exercise> GoalExercises { get; set; } //exercises during MostRecentGoal
 
         [Display(Name = "Progress")]
-        public int? GoalProgressMinutes => Exercises.Sum(e => e.Duration);
+        public int? GoalProgressMinutes => GoalExercises.Sum(e => e.Duration);
 
-        public double GoalProgressPercentage => Math.Round(((double)GoalProgressMinutes / (double)Goal.Target) * 100);
+        public double GoalProgressPercentage => Math.Round(((double)GoalProgressMinutes / (double)MostRecentGoal.Target) * 100);
 
         public string ProgressColor
         {
@@ -26,13 +26,9 @@ namespace FitnessTracker.Models.ViewModels
                 {
                     return "bg-danger";
                 }
-                else if (GoalProgressPercentage < 70)
+                else if (GoalProgressPercentage < 67)
                 {
                     return "bg-warning";
-                }
-                else if (GoalProgressPercentage < 90)
-                {
-                    return "bg-info";
                 }
                 else if (GoalProgressPercentage < 100)
                 {

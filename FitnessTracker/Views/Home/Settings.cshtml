@@ -124,13 +124,13 @@
 
             <div class="row">
                 <h5>Current Goal</h5>
-                @{ if (Model.CurrentGoal == null)
+                @{ if (Model.MostRecentGoal == null)
                     {
                         <a class="btn btn-link btn-sm" asp-action="Create" asp-controller="Goals">Set Goal</a>
                     }
                 }
             </div>
-            if (Model.CurrentGoal != null)
+            if (Model.MostRecentGoal != null)
             {
                 <table class="table">
                     <thead>
@@ -147,12 +147,20 @@
                     <tbody>
                         <tr>
                             <td>
-                                @Html.DisplayFor(g => Model.CurrentGoal.StartDate) - @Html.DisplayFor(g => Model.CurrentGoal.EndDate)
+                                @Html.DisplayFor(g => Model.MostRecentGoal.StartDate) - @Html.DisplayFor(g => Model.MostRecentGoal.EndDate)
                             </td>
                             <td>
-                                @Html.DisplayFor(g => Model.CurrentGoal.Target)
+                                @Html.DisplayFor(g => Model.MostRecentGoal.Target)
                             </td>
-                            <td><a asp-controller="Goals" asp-action="Edit" asp-route-id="@Model.CurrentGoal.GoalId">Edit</a> | <a asp-controller="Goals" asp-action="Delete" asp-route-id="@Model.CurrentGoal.GoalId">Delete</a></td>
+                            <td>
+                                @{
+                                    if (!Model.MostRecentGoal.IsDone(Model.GoalExercises))
+                                    {
+                                        <a asp-controller="Goals" asp-action="Edit" asp-route-id="@Model.MostRecentGoal.GoalId">Edit</a>
+                                    }
+                                }
+                                <a asp-controller="Goals" asp-action="Delete" asp-route-id="@Model.MostRecentGoal.GoalId">Delete</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -194,7 +202,7 @@
                             </td>
                             <td>
                                 @{
-                                    if (goal == Model.CurrentGoal)
+                                    if (goal == Model.MostRecentGoal && !goal.IsDone(Model.GoalExercises))
                                     {
                                         <a asp-controller="Goals" asp-action="Edit" asp-route-id="@goal.GoalId">Edit</a><span> | </span>
                                     }

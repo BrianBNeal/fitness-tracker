@@ -38,44 +38,46 @@ namespace FitnessTracker.Controllers
             int currentWeeklyTotal = 0;
             if (thisWeeksExercises != null)
             {
-                currentWeeklyTotal = thisWeeksExercises.Select(e => e.Duration).Sum();
+                currentWeeklyTotal = thisWeeksExercises.Sum(e => e.Duration);
             }
-            //current Goal for this user
-            var allGoals = _context.Goals;
-            var usersGoals = allGoals.Where(g => g.UserId == user.Id).OrderByDescending(g => g.StartDate);
-            var currentGoal = usersGoals.Where(g => g.EndDate >= DateTime.Now).FirstOrDefault();
+
+            var userGoals = _context.Goals.Where(g => g.UserId == user.Id);
 
             HomeViewModel model = new HomeViewModel
             {
                 User = user,
-                Goal = currentGoal,
-                CurrentWeeklyTotal = currentWeeklyTotal,
-                Exercises = null
+                CurrentWeeklyTotal = currentWeeklyTotal
             };
 
-            //exercises during current Goal
-            if (currentGoal != null)
+            //most recent Goal for this user
+            if (userGoals != null)
             {
-                model.Exercises = await _context.Exercises
+                model.MostRecentGoal = _context.Goals.Where(g => g.UserId == user.Id).OrderByDescending(g => g.StartDate).FirstOrDefault();
+            }
+
+            //exercises during MostRecentGoal
+            if (model.MostRecentGoal != null)
+            {
+                model.GoalExercises = await userExercises
                     .Include(e => e.ExerciseType)
                     .Include(e => e.Location)
                     .Include(e => e.EnjoymentLevel)
                     .Include(e => e.ExertionLevel)
                     .OrderByDescending(e => e.DateLogged)
-                    .Where(e => e.UserId == user.Id && e.DateLogged >= currentGoal.StartDate)
+                    .Where(e => e.DateLogged >= model.MostRecentGoal.StartDate && e.DateLogged <= model.MostRecentGoal.EndDate)
                     .ToListAsync();
             }
 
             model.User.Exercises = userExercises.ToList();
 
-            model.RecentExercises = await _context.Exercises
-                .Where(e => e.UserId == user.Id)
+            model.RecentExercises = await userExercises
+                .OrderByDescending(e => e.DateLogged)
                 .Take(3)
                 .Include(e => e.ExerciseType)
                     .Include(e => e.Location)
                     .Include(e => e.EnjoymentLevel)
                     .Include(e => e.ExertionLevel)
-                .OrderByDescending(e => e.DateLogged).ToListAsync();
+                .ToListAsync();
 
             return View(model);
         }
@@ -95,7 +97,7 @@ namespace FitnessTracker.Controllers
         public async Task<IActionResult> Settings()
         {
             var user = await GetCurrentUserAsync();
-            var goals = await _context.Goals.OrderByDescending(g => g.EndDate).Where(g => g.User == user).ToListAsync();
+            var goals = await _context.Goals.OrderByDescending(g => g.StartDate).Where(g => g.User == user).ToListAsync();
             var exercises = await _context.Exercises.Where(e => e.User == user).ToListAsync();
             var exerciseTypes = await _context.ExerciseTypes.Where(et => et.User == user).ToListAsync();
             var locations = await _context.Locations.Where(l => l.User == user).ToListAsync();
@@ -105,13 +107,26 @@ namespace FitnessTracker.Controllers
             user.ExerciseTypes = exerciseTypes;
             user.Locations = locations;
 
-            Goal currentGoal = goals.Where(g => g.EndDate >= DateTime.Now).FirstOrDefault();
+            Goal mostRecentGoal = goals.FirstOrDefault();
 
             SettingsViewModel model = new SettingsViewModel
             {
                 User = user,
-                CurrentGoal = currentGoal
+                MostRecentGoal = mostRecentGoal
             };
+
+            if (model.MostRecentGoal != null)
+            {
+                model.GoalExercises = await _context.Exercises
+                    .Where(e => e.User == user)
+                    .Include(e => e.ExerciseType)
+                    .Include(e => e.Location)
+                    .Include(e => e.EnjoymentLevel)
+                    .Include(e => e.ExertionLevel)
+                    .OrderByDescending(e => e.DateLogged)
+                    .Where(e => e.DateLogged >= model.MostRecentGoal.StartDate && e.DateLogged <= model.MostRecentGoal.EndDate)
+                    .ToListAsync();
+            }
 
             return View(model);
         }
